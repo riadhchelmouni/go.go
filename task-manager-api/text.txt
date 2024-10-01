@@ -1,0 +1,19 @@
+.
+├── app
+│   ├── controllers  # Handles API requests and responses
+│   ├── models       # Database models (User, Task)
+│   ├── routes       # API routes for handling endpoints
+│   ├── services     # Business logic (Task creation, user authentication)
+├── config           # Configuration (e.g., database config)
+├── database         # Database connection and migrations
+├── main.go          # Entry point for the application
+└── Dockerfile       # Docker configuration
+
+....................
+
+go mod init taskmanager
+go get github.com/gin-gonic/gin            # Web framework (Gin)
+go get gorm.io/gorm                        # ORM for database handling (GORM)
+go get gorm.io/driver/postgres             # PostgreSQL driver for GORM
+go get github.com/dgrijalva/jwt-go         # JWT authentication
+go get github.com/robfig/cron/v3           # Task scheduling (optional, for reminders)
