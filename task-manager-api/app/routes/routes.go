@@ -1,13 +1,14 @@
 package routes
 
 import (
-	"github.com/gin-gonic/gin"
+    "github.com/gin-gonic/gin"
+    "taskmanager/app/controllers"
 )
 
-func SetupRoutes(r *gin.Engine) {
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Welcome to the Task Manager API!",
-		})
-	})
+func SetupRoutes(router *gin.Engine) {
+    router.GET("/", controllers.HomeHandler)
+    router.GET("/tasks", controllers.GetTasks)
+    router.POST("/tasks", controllers.CreateTask)
+    router.PUT("/tasks/:id", controllers.UpdateTask)
+    router.DELETE("/tasks/:id", controllers.DeleteTask)
 }
