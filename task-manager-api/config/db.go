@@ -1,25 +1,28 @@
 package config
 
 import (
-	"fmt"
-	"log"
-
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+    "log"
+    "os"
+    "github.com/joho/godotenv"
+    "taskmanager/app/models"
 )
 
-var DB *gorm.DB
+// InitDB initializes the database connection from environment variables
+func InitDB() {
+    // Load environment variables from .env file
+    err := godotenv.Load()
+    if err != nil {
+        log.Fatalf("Error loading .env file")
+    }
 
-func ConnectDatabase() {
-	// Replace the password with the correct one you set in step 1
-	dsn := "host=localhost user=postgres password=new_password dbname=taskmanager port=5432 sslmode=disable"
+    // Get database connection string from environment variables
+    dsn := os.Getenv("DATABASE_URL")
 
-	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+    // Initialize the database connection
+    err = models.InitDB(dsn)
+    if err != nil {
+        log.Fatalf("Failed to connect to the database: %v", err)
+    }
 
-	if err != nil {
-		log.Fatalf("Failed to connect to database: %v\n", err)
-	}
-
-	fmt.Println("Database connected!")
-	DB = database
+    log.Println("Database connection successful!")
 }
